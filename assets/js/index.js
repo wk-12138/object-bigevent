@@ -12,31 +12,14 @@ $(function() {
             });
         })
     })
-    //获取用户数据函数
-function getUserInfo() {
-    $.ajax({
-        method: "GET",
-        url: "/my/userinfo",
-        // headers: {
-        //     Authorization: localStorage.getItem('token') || ""
-        // },
-        success: function(res) {
-            if (res.status !== 0) return layui.layer.msg('获取用户信息失败');
-            layui.layer.msg('获取用户信息成功');
-            //调用用户图像渲染函数
-            renderAvator(res.data);
-        },
-        //组织用户未登录直接访问后台网页complete属性
-    })
-}
-//创建用户图像渲染函数
-function renderAvator(user) {
+    //创建用户图像渲染函数
+function renderAvatar(user) {
     //1.获取用户名称
-    var name = user.nicjname || user.username;
+    var name = user.nickname || user.username;
     // 2.设置欢迎文本
     $('#welcome').html('欢迎&nbsp&nbsp' + name)
         // 3.按需渲染用户图像
-    if (user.user_pic !== null) {
+    if (user.user_pic === null) {
         // 渲染图片图像
         $(".layui-nav-img").attr('src', user_pic).show();
         $(".text-avator").hide();
@@ -46,4 +29,18 @@ function renderAvator(user) {
         var first = name[0].toUpperCase();
         $(".text-avator").html(first).show();
     }
+}
+//获取用户数据函数
+function getUserInfo() {
+    $.ajax({
+        method: "GET",
+        url: "/my/userinfo",
+        success: function(res) {
+            // console.log(res);
+            if (res.status !== 0) return layui.layer.msg('获取用户信息失败');
+            //调用用户图像渲染函数
+            renderAvatar(res.data);
+        },
+        //阻止用户未登录直接访问后台网页complete属性
+    })
 }
