@@ -19,9 +19,9 @@ function renderAvatar(user) {
     // 2.设置欢迎文本
     $('#welcome').html('欢迎&nbsp&nbsp' + name)
         // 3.按需渲染用户图像
-    if (user.user_pic === null) {
+    if (user.user_pic !== null) {
         // 渲染图片图像
-        $(".layui-nav-img").attr('src', user_pic).show();
+        $(".layui-nav-img").attr('src', user.user_pic).show();
         $(".text-avator").hide();
     } else {
         // 渲染文本图像
